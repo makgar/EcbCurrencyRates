@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml; // allow using Xml
 
 namespace EcbCurrencyRates
 {
-    public partial class Form1 : Form
+    public partial class RateForm : Form
     {
-        public Form1()
+        private string inputCurCode;
+        private string inputDate;
+
+        public RateForm()
         {
             InitializeComponent();
         }
@@ -21,9 +17,12 @@ namespace EcbCurrencyRates
         private void btnGetRate_Click(object sender, EventArgs e)
         {
             // temporary things
-            String TempCur = "HKD";
-            String TempDate = "20200925";
-            tmpLabel.Text = TempCur;
+            //string tempCur = "HKD";
+            //string tempDate = "20200925";
+            //tmpLabel.Text = tempCur;
+            tmpLabel.Text = inputCurCode;
+
+            tbResult.Text = ""; //removing any old value
 
             // Set the reader settings
             XmlReaderSettings settings = new XmlReaderSettings();
@@ -32,9 +31,9 @@ namespace EcbCurrencyRates
             settings.IgnoreWhitespace = true;
 
             // Create XmlReader object
-            String UrlString = "https://www.bank.lv/vk/ecb.xml" + "?date=" + TempDate;
-            XmlReader reader = XmlReader.Create(UrlString, settings);
-            
+            string urlString = "https://www.bank.lv/vk/ecb.xml" + "?date=" + inputDate;
+            XmlReader reader = XmlReader.Create(urlString, settings);
+
             using (reader)
             {
                 reader.MoveToContent();
@@ -45,19 +44,24 @@ namespace EcbCurrencyRates
                     inner.ReadToDescendant("ID");
                     //tmpLabel2.Text = inner.ReadElementContentAsString();
                     //tmpLabel3.Text = inner.ReadElementContentAsString();
-                    if (inner.ReadElementContentAsString() == TempCur)
+                    string curCode = inner.ReadElementContentAsString();
+                    //if (curCode == tempCur)
+                    if (curCode == inputCurCode)
                     {
                         if (inner.Name != "Rate")
                         {
                             inner.ReadToDescendant("Rate");
                             tmpLabel2.Text = inner.Name + " if";
-                            tmpLabel3.Text = inner.ReadElementContentAsString();
+                            string outputRate = inner.ReadElementContentAsString();
+                            tmpLabel3.Text = outputRate;
                         }
                         else
                         {
                             //tmpLabel2.Text = inner.NodeType.ToString();
                             tmpLabel2.Text = inner.Name + " else";
-                            tmpLabel3.Text = inner.ReadElementContentAsString();
+                            string outputRate = inner.ReadElementContentAsString();
+                            tmpLabel3.Text = outputRate;
+                            tbResult.Text = outputRate;
                         }
                         inner.Close();
                         break;
@@ -70,6 +74,34 @@ namespace EcbCurrencyRates
                 } while (reader.ReadToNextSibling("Currency"));
             }
             reader.Close();
+        }
+
+        private void lblCurCode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbResult_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpDate_ValueChanged(object sender, EventArgs e)
+        {
+            inputDate = dtpDate.Value.Date.ToString("yyyyMMdd");
+            //MessageBox.Show(inputDate);
+        }
+
+        private void RateForm_Load(object sender, EventArgs e)
+        {
+            inputDate = dtpDate.Value.Date.ToString("yyyyMMdd");
+            //MessageBox.Show(inputDate);
+        }
+
+        private void tbCurCode_TextChanged(object sender, EventArgs e)
+        {
+            //string inputCurCode = tbCurCode.Text.ToUpper();
+            inputCurCode = tbCurCode.Text.ToUpper();
         }
     }
 }
