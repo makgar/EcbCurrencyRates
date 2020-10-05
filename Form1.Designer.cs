@@ -35,6 +35,7 @@
             this.lblCurCode = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblResult = new System.Windows.Forms.Label();
+            this.lblMsg = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnGetRate
@@ -105,11 +106,22 @@
             this.lblResult.TabIndex = 6;
             this.lblResult.Text = "Result";
             // 
+            // lblMsg
+            // 
+            this.lblMsg.ForeColor = System.Drawing.Color.Red;
+            this.lblMsg.Location = new System.Drawing.Point(94, 120);
+            this.lblMsg.Name = "lblMsg";
+            this.lblMsg.Size = new System.Drawing.Size(197, 41);
+            this.lblMsg.TabIndex = 7;
+            this.lblMsg.Text = "\r\n";
+            this.lblMsg.Visible = false;
+            // 
             // RateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 127);
+            this.ClientSize = new System.Drawing.Size(304, 170);
+            this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.lblResult);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblCurCode);
@@ -135,6 +147,7 @@
         private System.Windows.Forms.Label lblCurCode;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.Label lblMsg;
     }
 }
 

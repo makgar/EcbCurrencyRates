@@ -56,14 +56,20 @@ namespace EcbCurrencyRates
 
         private void btnGetRate_Click(object sender, EventArgs e)
         {
+            // cleaning state
+            lblMsg.Visible = false; // label for displaying messages
+            lblMsg.Text = ""; // remove old value
+            tbResult.Text = ""; // remove old value from the "Result" form field
+            outputRate = null; // nullifying result of previous run, in case there was
+
             if (string.IsNullOrEmpty(inputCurCode))
             {
-                MessageBox.Show("Please enter a currency code.");
+                //MessageBox.Show("Please enter a currency code.");
+                lblMsg.Text = "Please enter a currency code.";
+                lblMsg.Visible = true;
                 return;
             }
 
-            tbResult.Text = ""; // remove old value from the "Result" form field
-            outputRate = null;
             XmlReaderSettings settings = SetXmlReaderSettings();
 
             // Create XmlReader object
@@ -100,7 +106,9 @@ namespace EcbCurrencyRates
 
             if (outputRate == null)
             {
-                MessageBox.Show("Currency rate for the provided currency code could not be found. Please check, if currency code is correct.");
+                //MessageBox.Show("Currency rate for the provided currency code could not be found. Please check, if currency code is correct.");
+                lblMsg.Text = "Currency rate for the provided currency code could not be found. Please check, if currency code is correct.";
+                lblMsg.Visible = true;
                 return;
             }
         }
