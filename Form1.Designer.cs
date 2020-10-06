@@ -61,6 +61,7 @@
             // 
             // dtpDate
             // 
+            this.dtpDate.Checked = false;
             this.dtpDate.CustomFormat = "dddd,MMMM d,yyyy";
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpDate.Location = new System.Drawing.Point(94, 38);
@@ -68,7 +69,6 @@
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(197, 20);
             this.dtpDate.TabIndex = 1;
-            this.dtpDate.Value = new System.DateTime(2020, 10, 5, 0, 0, 0, 0);
             this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
             // 
             // tbResult
